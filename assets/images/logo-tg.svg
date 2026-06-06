@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">TG</title>
+  <desc id="desc">Monograma TG do curso de tráfego pago</desc>
+  <rect width="64" height="64" rx="12" fill="#ffffff"/>
+  <path d="M14 18h19v7h-6v21h-7V25h-6v-7Z" fill="#0a4f4b"/>
+  <path d="M44 17c4.7 0 8.2 1.7 10.8 4.4l-4.7 5.1c-1.5-1.6-3.2-2.5-5.8-2.5-4.4 0-7.2 3.3-7.2 7.7 0 4.8 2.8 8 7.6 8 1.5 0 2.8-.3 3.8-.9v-3.5h-5.2v-6.2h12.1v13.3c-2.5 2.2-6.2 4-11 4-8.7 0-14.7-5.7-14.7-14.6C29.7 23.3 35.9 17 44 17Z" fill="#ff9f1c"/>
+</svg>
