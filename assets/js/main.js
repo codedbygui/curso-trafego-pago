@@ -3,14 +3,31 @@ const CHECKOUT_VALUE = 227;
 const CHECKOUT_CURRENCY = "BRL";
 
 const trackCheckoutIntent = () => {
-  if (!window.fbq) return;
-
-  window.fbq("track", "InitiateCheckout", {
+  const eventPayload = {
     content_name: "Gestão de Tráfego: Migrando para a Área",
     content_category: "Curso online",
     currency: CHECKOUT_CURRENCY,
     value: CHECKOUT_VALUE,
-  });
+  };
+
+  if (window.fbq) {
+    window.fbq("track", "InitiateCheckout", eventPayload);
+  }
+
+  if (window.gtag) {
+    window.gtag("event", "begin_checkout", {
+      currency: CHECKOUT_CURRENCY,
+      value: CHECKOUT_VALUE,
+      items: [
+        {
+          item_name: "Gestão de Tráfego: Migrando para a Área",
+          item_category: "Curso online",
+          price: CHECKOUT_VALUE,
+          quantity: 1,
+        },
+      ],
+    });
+  }
 };
 
 const updateHeader = () => {
