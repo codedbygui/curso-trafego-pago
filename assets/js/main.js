@@ -1,4 +1,29 @@
 const header = document.querySelector(".site-header");
+const CHECKOUT_VALUE = 227;
+const CHECKOUT_CURRENCY = "BRL";
+
+const trackCheckoutIntent = (link, event) => {
+  if (!window.fbq) return;
+
+  window.fbq("track", "InitiateCheckout", {
+    content_name: "Gestão de Tráfego: Migrando para a Área",
+    content_category: "Curso online",
+    currency: CHECKOUT_CURRENCY,
+    value: CHECKOUT_VALUE,
+  });
+
+  window.fbq("trackCustom", "CTAHotmartClick", {
+    button_text: link.textContent.trim(),
+    destination: link.href,
+  });
+
+  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+
+  event.preventDefault();
+  window.setTimeout(() => {
+    window.location.href = link.href;
+  }, 180);
+};
 
 const updateHeader = () => {
   if (!header) return;
@@ -67,6 +92,10 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
 
   prev.addEventListener("click", () => move(-1));
   next.addEventListener("click", () => move(1));
+});
+
+document.querySelectorAll("[data-track-checkout]").forEach((link) => {
+  link.addEventListener("click", (event) => trackCheckoutIntent(link, event));
 });
 
 updateHeader();
