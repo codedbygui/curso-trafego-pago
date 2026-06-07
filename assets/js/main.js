@@ -1,6 +1,8 @@
 const header = document.querySelector(".site-header");
-const CHECKOUT_VALUE = 227;
+const CHECKOUT_VALUE = 113.5;
 const CHECKOUT_CURRENCY = "BRL";
+const COUNTDOWN_DURATION_MS = 10 * 60 * 1000;
+const COUNTDOWN_STORAGE_KEY = "tg_offer_countdown_ends_at";
 
 const trackCheckoutIntent = () => {
   const eventPayload = {
@@ -34,6 +36,31 @@ const updateHeader = () => {
   if (!header) return;
   header.classList.toggle("is-scrolled", window.scrollY > 24);
 };
+
+const countdownTargets = document.querySelectorAll("[data-countdown]");
+
+if (countdownTargets.length) {
+  const now = Date.now();
+  const storedEndsAt = Number(sessionStorage.getItem(COUNTDOWN_STORAGE_KEY));
+  const endsAt = storedEndsAt > now ? storedEndsAt : now + COUNTDOWN_DURATION_MS;
+
+  sessionStorage.setItem(COUNTDOWN_STORAGE_KEY, String(endsAt));
+
+  const updateCountdown = () => {
+    const remaining = Math.max(0, endsAt - Date.now());
+    const totalSeconds = Math.ceil(remaining / 1000);
+    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+    const seconds = String(totalSeconds % 60).padStart(2, "0");
+    const label = `${minutes}:${seconds}`;
+
+    countdownTargets.forEach((target) => {
+      target.textContent = label;
+    });
+  };
+
+  updateCountdown();
+  window.setInterval(updateCountdown, 1000);
+}
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener("click", (event) => {
